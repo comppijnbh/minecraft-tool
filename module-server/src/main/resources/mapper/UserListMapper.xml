@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.mapper.UserListMapper">
+
+    <resultMap id="BaseResultMap" type="com.business.domain.UserList">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="age" column="age" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+            <result property="tel" column="tel" jdbcType="VARCHAR"/>
+            <result property="state" column="state" jdbcType="VARCHAR"/>
+            <result property="teacher" column="teacher" jdbcType="VARCHAR"/>
+            <result property="limit" column="limit" jdbcType="VARCHAR"/>
+            <result property="year" column="year" jdbcType="VARCHAR"/>
+            <result property="clas" column="clas" jdbcType="VARCHAR"/>
+            <result property="enterprise" column="enterprise" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`username`,`password`,
+        `name`,`age`,`sex`,
+        `tel`,`state`,`teacher`,
+        `limit`,`year`,`clas`,
+        `enterprise`
+    </sql>
+
+    <select id="selectUserListById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `user_list`
+        where  `id` = #{id} 
+    </select>
+
+    <select id="selectUserListList" parameterType="com.business.domain.UserList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `user_list`
+        <where>
+                <if test="username != null and username != ''">
+                    and `username` = #{username}
+                </if>
+                <if test="password != null and password != ''">
+                    and `password` = #{password}
+                </if>
+                <if test="name != null and name != ''">
+                    and `name` = #{name}
+                </if>
+                <if test="age != null and age != ''">
+                    and `age` = #{age}
+                </if>
+                <if test="sex != null and sex != ''">
+                    and `sex` = #{sex}
+                </if>
+                <if test="tel != null and tel != ''">
+                    and `tel` = #{tel}
+                </if>
+                <if test="state != null and state != ''">
+                    and `state` = #{state}
+                </if>
+                <if test="teacher != null and teacher != ''">
+                    and `teacher` = #{teacher}
+                </if>
+                <if test="limit != null and limit != ''">
+                    and `limit` = #{limit}
+                </if>
+                <if test="year != null and year != ''">
+                    and `year` = #{year}
+                </if>
+                <if test="clas != null and clas != ''">
+                    and `clas` = #{clas}
+                </if>
+                <if test="enterprise != null and enterprise != ''">
+                    and `enterprise` = #{enterprise}
+                </if>
+        </where>
+    </select>
+
+    <delete id="deleteUserListById" parameterType="java.lang.Long">
+        delete from `user_list`
+        where  `id` = #{id} 
+    </delete>
+    <insert id="insertUserList" keyColumn="id" keyProperty="id" parameterType="com.business.domain.UserList" useGeneratedKeys="true">
+        insert into `user_list`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null ">`id`,</if>
+                <if test="username != null and username != ''">`username`,</if>
+                <if test="password != null and password != ''">`password`,</if>
+                <if test="name != null and name != ''">`name`,</if>
+                <if test="age != null and age != ''">`age`,</if>
+                <if test="sex != null and sex != ''">`sex`,</if>
+                <if test="tel != null and tel != ''">`tel`,</if>
+                <if test="state != null and state != ''">`state`,</if>
+                <if test="teacher != null and teacher != ''">`teacher`,</if>
+                <if test="limit != null and limit != ''">`limit`,</if>
+                <if test="year != null and year != ''">`year`,</if>
+                <if test="clas != null and clas != ''">`clas`,</if>
+                <if test="enterprise != null and enterprise != ''">`enterprise`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null ">#{id},</if>
+                <if test="username != null and username != ''">#{username},</if>
+                <if test="password != null and password != ''">#{password},</if>
+                <if test="name != null and name != ''">#{name},</if>
+                <if test="age != null and age != ''">#{age},</if>
+                <if test="sex != null and sex != ''">#{sex},</if>
+                <if test="tel != null and tel != ''">#{tel},</if>
+                <if test="state != null and state != ''">#{state},</if>
+                <if test="teacher != null and teacher != ''">#{teacher},</if>
+                <if test="limit != null and limit != ''">#{limit},</if>
+                <if test="year != null and year != ''">#{year},</if>
+                <if test="clas != null and clas != ''">#{clas},</if>
+                <if test="enterprise != null and enterprise != ''">#{enterprise},</if>
+        </trim>
+    </insert>
+    <update id="updateUserListById" parameterType="com.business.domain.UserList">
+        update `user_list`
+        <set>
+                <if test="username != null and username != ''">
+                    `username` = #{username},
+                </if>
+                <if test="password != null and password != ''">
+                    `password` = #{password},
+                </if>
+                <if test="name != null and name != ''">
+                    `name` = #{name},
+                </if>
+                <if test="age != null and age != ''">
+                    `age` = #{age},
+                </if>
+                <if test="sex != null and sex != ''">
+                    `sex` = #{sex},
+                </if>
+                <if test="tel != null and tel != ''">
+                    `tel` = #{tel},
+                </if>
+                <if test="state != null and state != ''">
+                    `state` = #{state},
+                </if>
+                <if test="teacher != null and teacher != ''">
+                    `teacher` = #{teacher},
+                </if>
+                <if test="limit != null and limit != ''">
+                    `limit` = #{limit},
+                </if>
+                <if test="year != null and year != ''">
+                    `year` = #{year},
+                </if>
+                <if test="clas != null and clas != ''">
+                    `clas` = #{clas},
+                </if>
+                <if test="enterprise != null and enterprise != ''">
+                    `enterprise` = #{enterprise},
+                </if>
+        </set>
+        where   `id` = #{id} 
+    </update>
+
+</mapper>

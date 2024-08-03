@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.business.domain.Comment">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="listId" column="list_id" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="text" column="text" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`list_id`,`username`,
+        `text`
+    </sql>
+
+    <select id="selectCommentById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `comment`
+        where  `id` = #{id} 
+    </select>
+
+    <select id="selectCommentList" parameterType="com.business.domain.Comment" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `comment`
+        <where>
+                <if test="listId != null and listId != ''">
+                    and `list_id` = #{listId}
+                </if>
+                <if test="username != null and username != ''">
+                    and `username` = #{username}
+                </if>
+                <if test="text != null and text != ''">
+                    and `text` = #{text}
+                </if>
+        </where>
+    </select>
+
+    <delete id="deleteCommentById" parameterType="java.lang.Long">
+        delete from `comment`
+        where  `id` = #{id} 
+    </delete>
+    <insert id="insertComment" keyColumn="id" keyProperty="id" parameterType="com.business.domain.Comment" useGeneratedKeys="true">
+        insert into `comment`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null ">`id`,</if>
+                <if test="listId != null and listId != ''">`list_id`,</if>
+                <if test="username != null and username != ''">`username`,</if>
+                <if test="text != null and text != ''">`text`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null ">#{id},</if>
+                <if test="listId != null and listId != ''">#{listId},</if>
+                <if test="username != null and username != ''">#{username},</if>
+                <if test="text != null and text != ''">#{text},</if>
+        </trim>
+    </insert>
+    <update id="updateCommentById" parameterType="com.business.domain.Comment">
+        update `comment`
+        <set>
+                <if test="listId != null and listId != ''">
+                    `list_id` = #{listId},
+                </if>
+                <if test="username != null and username != ''">
+                    `username` = #{username},
+                </if>
+                <if test="text != null and text != ''">
+                    `text` = #{text},
+                </if>
+        </set>
+        where   `id` = #{id} 
+    </update>
+
+</mapper>

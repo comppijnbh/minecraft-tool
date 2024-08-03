@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.mapper.ListTbMapper">
+
+    <resultMap id="BaseResultMap" type="com.business.domain.ListTb">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="img" column="img" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="text" column="text" jdbcType="VARCHAR"/>
+            <result property="time" column="time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,`img`,`name`,
+        `text`,`time`
+    </sql>
+
+    <select id="selectListTbById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `list_tb`
+        where  `id` = #{id} 
+    </select>
+
+    <select id="selectListTbList" parameterType="com.business.domain.ListTb" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `list_tb`
+        <where>
+                <if test="img != null and img != ''">
+                    and `img` = #{img}
+                </if>
+                <if test="name != null and name != ''">
+                    and `name` = #{name}
+                </if>
+                <if test="text != null and text != ''">
+                    and `text` = #{text}
+                </if>
+                <if test="time != null and time != ''">
+                    and `time` = #{time}
+                </if>
+        </where>
+    </select>
+
+    <delete id="deleteListTbById" parameterType="java.lang.Long">
+        delete from `list_tb`
+        where  `id` = #{id} 
+    </delete>
+    <insert id="insertListTb" keyColumn="id" keyProperty="id" parameterType="com.business.domain.ListTb" useGeneratedKeys="true">
+        insert into `list_tb`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null ">`id`,</if>
+                <if test="img != null and img != ''">`img`,</if>
+                <if test="name != null and name != ''">`name`,</if>
+                <if test="text != null and text != ''">`text`,</if>
+                <if test="time != null and time != ''">`time`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null ">#{id},</if>
+                <if test="img != null and img != ''">#{img},</if>
+                <if test="name != null and name != ''">#{name},</if>
+                <if test="text != null and text != ''">#{text},</if>
+                <if test="time != null and time != ''">#{time},</if>
+        </trim>
+    </insert>
+    <update id="updateListTbById" parameterType="com.business.domain.ListTb">
+        update `list_tb`
+        <set>
+                <if test="img != null and img != ''">
+                    `img` = #{img},
+                </if>
+                <if test="name != null and name != ''">
+                    `name` = #{name},
+                </if>
+                <if test="text != null and text != ''">
+                    `text` = #{text},
+                </if>
+                <if test="time != null and time != ''">
+                    `time` = #{time},
+                </if>
+        </set>
+        where   `id` = #{id} 
+    </update>
+
+</mapper>

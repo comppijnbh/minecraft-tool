@@ -1,0 +1,51 @@
+server:
+  port: 8888
+  servlet:
+    context-path:
+
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+#    mode: LEGACYHTML5
+#    encoding: UTF-8
+#    prefix: classpath:/templates/            # 静态页面所在的路径，一般在resources文件加下创建
+#    suffix: .html
+    # 开启自动重启
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+#  devtools:
+#    restart:
+#      enabled: true
+#      additional-paths: src/main/java,src/main/resources
+#      trigger-file: classpath:static/
+  # 配置文件选择(dev，pro)
+  profiles:
+    active: dev
+
+  # 国际化（消息源自动配置,springboot默认找出messages）
+  messages:
+    basename: i18n.messages
+  datasource:
+    url: jdbc:mysql://localhost:3306/module_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  main:
+    allow-circular-references: true
+mybatis:
+  #  mapper文件
+  mapper-locations: mapper/**/*Mapper.xml
+  #  实体类
+  type-aliases-package: com.example.*.domain
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+myapp:
+  upload-path: D:\upload
